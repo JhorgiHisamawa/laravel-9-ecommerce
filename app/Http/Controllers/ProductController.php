@@ -38,7 +38,6 @@ class ProductController extends Controller
 
 
             return Redirect::route('index_product');
-
     }
 
     public function index_product()
@@ -50,5 +49,36 @@ class ProductController extends Controller
     public function show_product(Product $product)
     {
         return view('show_product', compact('product'));
+    }
+
+    public function edit_product(Product $product)
+    {
+        return view('edit_product', compact('product'));
+    }
+
+    public function update_product(Request $request, Product $product)
+    {
+            $request->validate([
+                'name' => 'required',
+                'price' => 'required',
+                'stock' => 'required',
+                'description' => 'required',
+                'image_url' => 'required'
+            ]);
+
+            // Store 
+            $file = $request->file('image_url');
+            $path = $file->store('public/products');
+
+           $product->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'description' => $request->description,
+                'image_url' => str_replace('public/', '', $path), // Store with a name file
+            ]);
+
+
+            return Redirect::route('show_product', $product);
     }
 }

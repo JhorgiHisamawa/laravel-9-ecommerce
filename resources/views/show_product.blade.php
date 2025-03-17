@@ -13,5 +13,8 @@
     <p>Price: Rp{{$product->price}}</p>
     <p>Stock: {{$product->stock}}</p>
     <img src="{{url('storage/'.$product->image_url)}}" alt="" height="100px">
+    <form action="{{ route('edit_product', $product) }}" method="get">
+        <button type="submit">Edit</button>
+    </form>
 </body>
 </html>
