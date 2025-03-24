@@ -62,8 +62,8 @@ class ProductController extends Controller
                 'name' => 'required',
                 'price' => 'required',
                 'stock' => 'required',
-                'description' => 'required',
-                'image_url' => 'required'
+                'image_url' => 'required',
+                'description' => 'required'
             ]);
 
             // Store 

@@ -9,6 +9,9 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $table = 'orders'; // Pastikan nama tabel benar
+
+
     protected $fillable = [
         'user_id',
         'is_paid',
