@@ -23,6 +23,11 @@
         <input type="number" name="amount" value="{{$cart->amount}}">
         <button type="submit">Update</button>
         </form>
+        <form action="{{ route('delete_cart', $cart) }}" method="post">
+            @method('delete')
+            @csrf
+            <button type="submit">Delete</button>
+        </form>
     @endforeach
 </body>
 </html>
