@@ -18,13 +18,13 @@ class Order extends Model
         'payment_receipt',
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function products()
+    public function transactions()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Transaction::class);
     }
 }

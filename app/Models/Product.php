@@ -19,13 +19,13 @@ class Product extends Model
         'stock',
     ];
 
-    public function orders()
+    public function transactions()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsTo(Order::class);
     }
 
     public function carts()
     {
-        return $this->belongsToMany(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 }

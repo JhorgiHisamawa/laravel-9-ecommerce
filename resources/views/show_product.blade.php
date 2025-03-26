@@ -6,6 +6,13 @@
     <title>{{$product->name}}</title>
 </head>
 <body>
+        <!-- show error message -->
+    @if ($errors->any()) 
+        @foreach ($errors->all() as $error)
+        <p>{{$error}}</p>
+        @endforeach
+    @endif
+
     <a href="{{route('index_product')}}">
         Back to Index Product</a>
     <p>Name: {{$product->name}}</p>
