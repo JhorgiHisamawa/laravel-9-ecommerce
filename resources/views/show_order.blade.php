@@ -1,27 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show order</title>
-</head>
-<body>
-    <p>ID: {{$order->id}}</p>
-    <p>User: {{$order->user->name}}</p>
-    @foreach ($order->transactions as $transaction)
-        <p>Product: {{$transaction->product->name}} </p>
-        <p>Amount: {{ $transaction->amount}}</p>
-    @endforeach
+@extends('layouts.app')
 
-    @if ($order->is_paid == false && $order->payment_receipt == null)
-        <form action="{{ route('submit_payment_receipt', $order) }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <label for="payment_receipt">Upload your payment receipt</label>
-            <br>
-            <input type="file" name="payment_receipt" id="payment_receipt">
-            <br>
-            <button type="submit">Confirm payment</button>
-        </form>
-    @endif
-</body>
-</html>
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Order Detail') }}</div>
+
+                <div class="card-body">
+                    <h5 class="card-title">Order ID: {{ $order->id }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">User: {{ $order->user->name }}</h6>
+
+                    <p class="card-text">Status: {{ $order->is_paid ? 'Paid' : 'Unpaid' }}</p>
+                    
+                    <hr>
+                    @foreach ($order->transactions as $transaction)
+                        <p class="mb-2">{{ $transaction->product->name }} x {{ $transaction->amount }}</p>
+                    @endforeach
+                    <hr>
+
+                    @if (!$order->is_paid && !$order->payment_receipt)
+                        <form action="{{ route('submit_payment_receipt', $order) }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group mb-3">
+                                <label for="payment_receipt">Payment Receipt</label>
+                                <input type="file" class="form-control" id="payment_receipt" name="payment_receipt">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

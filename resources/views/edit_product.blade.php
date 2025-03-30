@@ -1,35 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit {{$product->name}}</title>
-</head>
-<body>
-    <form action="{{ route('update_product', $product) }}" method="post" enctype="multipart/form-data">
-        @method('patch')
-        @csrf
-    <label for="">Name</label>
-    <br>
-    <input type="text" name="name" value="{{$product->name}}">
-    <br>
-    <label for="">Description</label>
-    <br>
-    <input type="text" name="description" value="{{$product->description}}">
-    <br>
-    <label for="">Price</label>
-    <br>
-    <input type="number" name="price" value="{{$product->price}}">
-    <br>
-    <label for="">Stock</label>
-    <br>
-    <input type="number" name="stock" value="{{$product->stock}}">
-    <br>
-    <label for="">Image</label>
-    <br>
-    <input type="file" name="image_url">
-    <br>
-    <button type="submit">Update data</button>
+@extends('layouts.app')
 
-</body>
-</html>
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Update Product') }}</div>
+                <div class="card-body">
+                    <form action="{{ route('update_product', $product) }}" method="post" enctype="multipart/form-data">
+                        @method('patch')
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" name="description" value="{{ $product->description }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" id="price" name="price" value="{{ $product->price }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="image_url">Image</label>
+                            <input type="file" class="form-control" id="image_url" name="image_url">
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock</label>
+                            <input type="number" class="form-control" id="stock" name="stock" value="{{ $product->stock }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+

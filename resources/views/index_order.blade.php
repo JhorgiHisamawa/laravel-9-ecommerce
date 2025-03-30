@@ -1,30 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order</title>
-</head>
-<body>
-    @foreach ($orders as $order)
-        <p>ID: {{$order->id}}</p>
-        <p>User: {{$order->user->name}}</p>
-        <p>{{ $order->created_at }}</p>
-        <p> 
-            @if ($order->is_paid == true)
-                Paid
-            @else
-                Unpaid
-                @if ($order->payment_receipt) 
-                    <a href="{{ url('storage/' . $order->payment_receipt) }}">Payment receipt</a>
-                @endif
-                <form action="{{ route('confirm_payment', $order) }}" method="post">
-                @csrf
-                <button type="submit">Confirm payment</button>
-        </form>
-            @endif
-        </p>
-        
-    @endforeach
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Orders') }}</div>
+
+                <div class="card-group m-auto">
+                    @foreach ($orders as $order)
+                        <div class="card m-2" style="width: 30rem;">
+                            <div class="card-body">
+                                <a href = "{{ route('show_order',$order )}}">
+                                    <h5 class="card-title">Order ID: {{ $order->id }}</h5>
+                                </a>
+                                <h6 class="card-subtitle mb-2 text-muted">User: {{ $order->user->name }}</h6>
+
+                                @if ($order->is_paid)
+                                    <p class="card-text">Status: Paid</p>
+                                @else
+                                    <p class="card-text">Status: Unpaid</p>
+                                    @if ($order->payment_receipt)
+                                        <div class="d-flex justify-content-between align-items-center gap-2">
+                                            <a href="{{ url('storage/' . $order->payment_receipt) }}"
+                                             class = "btn btn-primary m-1">Show Payment Receipt</a>
+                                            <form action ="{{ route('confirm_payment', $order) }}" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success">Confirm</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

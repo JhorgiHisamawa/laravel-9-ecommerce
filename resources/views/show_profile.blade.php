@@ -1,36 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-</head>
-<body>
-    @if ($errors -> any())
-    @foreach ($errors->all() as $error)
-        <p>{{ $error }}</p>
-    @endforeach
-    @endif
-    
-    <p>Name: {{ $user->name }}</p>
-    <p>Email: {{ $user->email }}</p>
-    <p>Role: {{ $user->is_admin ? 'Admin' : 'User' }}</p>
+@extends('layouts.app')
 
-    <form action="{{ route('update_profile') }}" method="post">
-        @csrf
-        <label for="name">Name</label>
-        <br>
-        <input type="text" name="name" id="name" value="{{ $user->name }}">
-        <br>
-        <label for="password">Password</label>
-        <br>
-        <input type="password" name="password" id="password">
-        <br>
-        <label for="password_confirmation">Confirm password</label>
-        <br>
-        <input type="password" name="password_confirmation" id="password_confirmation">
-        <br>
-        <button type="submit">Update profile</button>
-    </form>
-</body>
-</html>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Profile') }}</div>
+
+                    <div class="card-body">
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        @endif
+                       
+                        <form action="{{ route('update_profile') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" value="{{ $user->email }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                            <div class="form-group">
+                                <label for="password_confirmation">Confirm Password</label>
+                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <input type="role" class="form-control" value=" {{ $user->is_admin ? 'Admin' : 'User' }} " disabled>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
