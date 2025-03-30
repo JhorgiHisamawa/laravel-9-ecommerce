@@ -49,7 +49,33 @@ class OrderController extends Controller
     public function index_order()
     {
         $orders = Order::all();
-
         return view('index_order', compact('orders'));
+    }
+
+    public function show_order(Order $order)
+    {
+        return view('show_order', compact('order'));
+    }
+
+    public function submit_payment_receipt(Request $request, Order $order)
+    {
+        $file = $request->file('payment_receipt');
+        $filename = time().'_'.$order->id.'.'.$file->getClientOriginalExtension();
+        $path = $file->storeAs('public/payments', $filename); 
+
+        $order->update([
+            'payment_receipt' => str_replace('public/', '', $path), 
+        ]);
+
+        return Redirect::back();
+    }
+
+    public function confirm_payment(Order $order)
+    {
+        $order->update([
+            'is_paid' => true,
+        ]);
+
+        return Redirect::back();
     }
 }

@@ -68,16 +68,16 @@ class ProductController extends Controller
 
             // Store 
             $file = $request->file('image_url');
-            $path = $file->store('public/products');
+            $filename = time().'_'.str_slug($request->name).'.'.$file->getClientOriginalExtension();
+            $path = $file->storeAs('public/products', $filename);
 
-           $product->update([
+            $product->update([
                 'name' => $request->name,
                 'price' => $request->price,
                 'stock' => $request->stock,
                 'description' => $request->description,
-                'image_url' => str_replace('public/', '', $path), // Store with a name file
+                'image_url' => str_replace('public/', '', $path),
             ]);
-
 
             return Redirect::route('show_product', $product);
     }
