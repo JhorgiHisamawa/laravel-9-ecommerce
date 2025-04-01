@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -20,12 +21,11 @@ use App\Http\Controllers\ProfileController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Redirect::route('index_product');
 });
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/product/create', [ProductController::class,'create_product'])->name('create_product');
 Route::post('/product/create',[ProductController::class,'store_product'])->name('store_product');
 Route::get('/product', [ProductController::class,'index_product'])->name('index_product');
