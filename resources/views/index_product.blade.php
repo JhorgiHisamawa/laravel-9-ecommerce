@@ -16,11 +16,13 @@
                                     <form action="{{ route('show_product', $product) }}" method="get">
                                         <button type="submit" class="btn btn-primary">Show detail</button>
                                     </form>
+                                    @if(Auth::check() && Auth::user()->is_admin)
                                     <form action="{{ route('delete_product', $product) }}" method="post">
                                        @method('delete')
                                        @csrf
                                        <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

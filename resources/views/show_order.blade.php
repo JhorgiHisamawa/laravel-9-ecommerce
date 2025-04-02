@@ -25,7 +25,7 @@
                     <hr>
                         <p>Total Price: Rp {{ $total_price }}</p>
                     <hr>
-                    @if (!$order->is_paid && !$order->payment_receipt)
+                    @if (!$order->is_paid && !$order->payment_receipt && !Auth::user()->is_admin)
                         <form action="{{ route('submit_payment_receipt', $order) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mb-3">
